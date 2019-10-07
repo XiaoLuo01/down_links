@@ -1,41 +1,26 @@
 <template>
-  <div class="wrapper home">
+  <div class="wrapper recommend">
     <Header></Header>
-
     <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
       <Banner ref="banner"></Banner>
 
-      <div class="notice">
-        <van-notice-bar v-if="trumpet && trumpet.des" :text="trumpet && trumpet.des" left-icon="volume" color="red" background="#fff"/>
-        <div class="hot">
-          <span>全网最方便的下载专区</span>
-          <span class="hot-text" v-if="trumpet && trumpet.des"><van-notice-bar :text="trumpet && trumpet.des" color="red" background="#fff"/></span>
-        </div>
-      </div>
-      
-      <div class="bigimg-list">
-        <div class="img-item" v-for="(img, index) in bigImgs" :key="'big_'+index">
-          <a :href="img.open_url" target="_blank">
-            <img :src="img.image_url" alt="">
-          </a>
-        </div>
-      </div>
-
       <div class="app-down">
-        <h4>推荐下载</h4>
-        <van-grid :column-num="3" square >
+        <!-- <h4>推荐下载</h4> -->
+        <van-grid :column-num="3">
           <van-grid-item v-for="(app, index) in applists" :key="'app_'+index" >
             <a href="javascript:;" class="hot-tag" @click="goToDetail(app)">
               <img class="icon" v-if="app.tips === '热门'" src="../assets/img/hot-tag.png" alt="">
               <img class="icon" v-else-if="app.tips === '推荐'" src="../assets/img/reco-tag.png" alt="">
-              <img class="app-img" :src="app.app_icon ? app.app_icon : '../assets/img/default.jpg'" alt="">
-              <span class="appname">{{app.app_name}}</span>
+              <img class="app-img" :src="app.app_icon" alt="">
+              <span>{{app.app_name}}</span>
+              <p>下载数 : {{app.app_download_count}}</p>
             </a>
           </van-grid-item>
         </van-grid>
       </div>
 
     </van-pull-refresh>
+
     <FooterImg></FooterImg>
   </div>
 </template>
@@ -46,13 +31,14 @@ import Header from '@/components/Header.vue';
 import Banner from '@/components/Banner.vue';
 import FooterImg from '@/components/FooterImg.vue';
 import { NoticeBar, Grid, GridItem, PullRefresh, Toast } from 'vant';
-import { adlist, applist } from '../utils/api';
+import { applist } from '../utils/api';
 
 export default {
   name: 'Home',
   data() {
     return {
       trumpet: '',
+      hotText: '',
       bigImgs: [],
       applists: [],
       isLoading: false
@@ -71,15 +57,13 @@ export default {
     Toast.loading({
       message: '加载中...'
     });
-    this.getTrumpetAndBigimg();
     this.getApplist();
   },
   methods: {
-    getTrumpetAndBigimg() {
-      adlist().then(response => {
+    getApplist() {
+      applist({ appcount: 0 }).then(response => {
         if (response.data.Data) {
-          this.trumpet = response.data.Data.trumpet[0];
-          this.bigImgs = response.data.Data.big_banner;
+          this.applists = response.data.Data;
         }
         this.isLoading = false;
         Toast.clear();
@@ -87,15 +71,6 @@ export default {
         console.log(err);
         this.isLoading = false;
         Toast.clear();
-      });
-    },
-    getApplist() {
-      applist({ appcount: 0 }).then(response => {
-        if (response.data.Data) {
-          this.applists = response.data.Data;
-        }
-      }).catch(err=>{
-        console.log(err)
       });
     },
     goToDetail(appitem) {
@@ -106,7 +81,6 @@ export default {
     },
     onRefresh() {
       this.$refs.banner.getBannerImg();
-      this.getTrumpetAndBigimg();
       this.getApplist();
     }
   },
@@ -115,7 +89,6 @@ export default {
       Toast.loading({
         message: '加载中...'
       });
-      this.getTrumpetAndBigimg();
       this.getApplist();
     }
   }
@@ -123,7 +96,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.home {
+.recommend {
   .van-notice-bar {
     padding: 0 0.15rem;
   }
@@ -152,12 +125,12 @@ export default {
     }
     .van-grid-item {
       a {
-        display: flex;
+        display: inline-flex;
         align-items: center;
         flex-direction: column;
         color: #333;
         font-size: 14px;
-        position: relative; 
+        position: relative;
       }
       img.icon {
         width: 25px;
@@ -169,7 +142,7 @@ export default {
         width: 50px;
         border-radius: 8px;
       }
-      span.appname {
+      span {
         width: 100px;
         margin-top: 10px;
         overflow: hidden;
@@ -177,7 +150,13 @@ export default {
         white-space: nowrap;
         text-align: center;
       }
+      p {
+        color: red;
+        font-size: 12px;
+        margin-top: 4px;
+      }
     }
   }
 }
 </style>
+
