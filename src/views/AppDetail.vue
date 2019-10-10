@@ -91,13 +91,14 @@ export default {
     align-items: center;
     img {
       width: 120px;
-      margin: 5px;
-      padding-right: 10px;
+      height: 120px;
+      margin: 5px 15px 5px 5px;
+      border-radius: 12px;
     }
     .left {
       flex: 1;
-      height: 100%;
-      padding-top: 10px;
+      // height: 100%;
+      // padding-top: 10px;
       h4 {
         font-size: 16px;
         font-weight: bold;

@@ -140,6 +140,7 @@ export default {
       }
       img.app-img {
         width: 50px;
+        height: 50px;
         border-radius: 8px;
       }
       span {
@@ -154,6 +155,11 @@ export default {
         color: red;
         font-size: 12px;
         margin-top: 4px;
+        width: 100px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        text-align: center;
       }
     }
   }

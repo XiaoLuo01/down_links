@@ -6,10 +6,16 @@
       <Banner ref="banner"></Banner>
 
       <div class="notice">
-        <van-notice-bar v-if="trumpet && trumpet.des" :text="trumpet && trumpet.des" left-icon="volume" color="red" background="#fff"/>
+        <a :href="trumpet && trumpet.open_url" target="_blank">
+          <van-notice-bar v-if="trumpet && trumpet.des" :text="trumpet && trumpet.des" left-icon="volume" color="red" background="#fff"/>
+        </a>
         <div class="hot">
           <span>全网最方便的下载专区</span>
-          <span class="hot-text" v-if="trumpet && trumpet.des"><van-notice-bar :text="trumpet && trumpet.des" color="red" background="#fff"/></span>
+          <span class="hot-text" v-if="trumpet && trumpet.des">
+            <a :href="trumpet && trumpet.open_url" target="_blank">
+              <van-notice-bar :text="trumpet && trumpet.des" color="red" background="#fff"/>
+            </a>
+          </span>
         </div>
       </div>
       
@@ -167,6 +173,7 @@ export default {
       }
       img.app-img {
         width: 50px;
+        height: 50px;
         border-radius: 8px;
       }
       span.appname {

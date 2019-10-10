@@ -17,11 +17,20 @@ export default {
     }
   },
   created() {
-    // footerImg().then(response => {
-    //     this.img = response.data.respond.banner[0];
-    //   }).catch(err=>{
-    //     console.log(err)
-    //   });
+    this.getFooterImg();
+  },
+  methods: {
+    getFooterImg() {
+      footerImg().then(response => {
+      if (response.data.Data.length !== 0 || response.data.Data) {
+        var max = response.data.Data.length;
+        var random = Math.floor(Math.random()*max+0) || 0;
+        this.img = response.data.Data[random];
+      }
+      }).catch(err=>{
+        console.log(err)
+      });
+    }
   }
 }
 </script>

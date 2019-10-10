@@ -20,7 +20,7 @@ export function adlist(){
 // 底部广告图
 export function footerImg(){
   return https({
-    url: BASE_URL +　'/footerimg', //请求的地址
+    url: BASE_URL +　'/ad/bottomadList', //请求的地址
     method:'POST'
   })
 }

@@ -3,7 +3,7 @@
     <van-swipe :autoplay="3000" indicator-color="green">
       <van-swipe-item v-for="(image, index) in images" :key="'img_'+index">
         <a :href="image.open_url" target="_blank">
-          <img :src="image.image_url"/>
+          <img :src="image.image_url" :title="image.des"/>
         </a>
       </van-swipe-item>
     </van-swipe>
