@@ -10,7 +10,7 @@
       <div class="top-title">
         <img :src="appitem.app_icon" alt="">
         <div class="left">
-          <h4>{{appitem.app_name}}</h4>
+          <h4>{{appitem.app_name | getAppName}}</h4>
           <span>{{appitem.category}}</span>
           <p>下载数: {{appitem.app_download_count}}</p>
         </div>
@@ -20,11 +20,11 @@
         <div class="des-text" v-html="appitem.des || '无'"></div>
       </div>
       <a class="down-btn" :href="appitem.open_url" target="_blank">
-        <van-button type="info" @click="download">立即下载</van-button>
+        <van-button icon="down" type="info" @click="download">立即下载</van-button>
       </a>
     </div>
 
-    <FooterImg></FooterImg>
+    <FooterImg ref="footerimg"></FooterImg>
   </div>
 </template>
 
@@ -49,9 +49,14 @@ export default {
   created() {
     this.appitem = this.$route.query;
   },
+  filters: {
+    getAppName(name) {
+      return name && name.substring(0,6) + '...';
+    }
+  },
   methods: {
     goBack() {
-      this.$router.go(-1);
+      this.$router.back(-1);
     },
     reportClick() {
       var data = {
@@ -75,6 +80,7 @@ export default {
   watch: {
     '$route'(to, form) {
       this.appitem = this.$route.query;
+      this.$refs.footerimg.getFooterImg();
     }
   }
 }
@@ -82,45 +88,62 @@ export default {
 
 <style scoped lang="scss">
 .app-detail {
+  height: 100%;
+  padding-bottom: 100px!important;
   .van-nav-bar__title {
     font-weight: 700;
   }
-  .top-title {
-    display: flex;
-    height: 120px;
-    align-items: center;
-    img {
-      width: 120px;
+  .detail-wrap {
+    padding: 0 18px;
+    .top-title {
+      display: flex;
       height: 120px;
-      margin: 5px 15px 5px 5px;
-      border-radius: 12px;
-    }
-    .left {
-      flex: 1;
-      // height: 100%;
-      // padding-top: 10px;
-      h4 {
-        font-size: 16px;
-        font-weight: bold;
-        margin-bottom: 15px;
-        padding-top: 5px;
+      align-items: center;
+      margin-top: 10px;
+      img {
+        width: 120px;
+        height: 120px;
+        margin: 5px 15px 5px 5px;
+        border-radius: 12px;
       }
-      span {
-        font-size: 14px;
-      }
-      p {
-        margin-top: 15px;
-        color: red;
-        font-size: 14px;
+      .left {
+        flex: 1;
+        height: 100%;
+        position: relative;
+        h4 {
+          font-size: 16px;
+          font-weight: bold;
+          position: absolute;
+          top: 0;
+        }
+        span {
+          font-size: 14px;
+          position: absolute;
+          top: 50%;
+          transform: translateY(-50%);
+        }
+        p {
+          color: red;
+          font-size: 14px;
+          position: absolute;
+          bottom: 0;
+        }
       }
     }
   }
+  
   .describe {
-    padding: 10px;
+    padding: 10px 5px;
     margin-bottom: 30px;
     p {
-      margin-bottom: 10px;
+      margin-bottom: 15px;
+      margin-top: 10px;
       font-weight: bold;
+    }
+    .des-text {
+      font-size: 14px;
+      height: 145px;
+      overflow: hidden;
     }
   }
   .down-btn {
@@ -134,5 +157,13 @@ export default {
       margin-bottom: 20px;
     }
   }
+  .footer-img {
+    bottom: 0;
+  }
+}
+
+.van-nav-bar__text, .van-nav-bar .van-icon {
+  font-size: 16px;
+  font-weight: bold;
 }
 </style>

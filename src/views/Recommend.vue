@@ -11,9 +11,9 @@
             <a href="javascript:;" class="hot-tag" @click="goToDetail(app)">
               <img class="icon" v-if="app.tips === '热门'" src="../assets/img/hot-tag.png" alt="">
               <img class="icon" v-else-if="app.tips === '推荐'" src="../assets/img/reco-tag.png" alt="">
-              <img class="app-img" :src="app.app_icon" alt="">
-              <span>{{app.app_name}}</span>
-              <p>下载数 : {{app.app_download_count}}</p>
+              <img class="app-img" :src="app.app_icon" alt="" @error="imgError(app)">
+              <span>{{app.app_name | getAppName}}</span>
+              <p>下载数: {{app.app_download_count}}</p>
             </a>
           </van-grid-item>
         </van-grid>
@@ -21,7 +21,7 @@
 
     </van-pull-refresh>
 
-    <FooterImg></FooterImg>
+    <FooterImg ref="footerimg"></FooterImg>
   </div>
 </template>
 
@@ -59,6 +59,11 @@ export default {
     });
     this.getApplist();
   },
+  filters: {
+    getAppName(name) {
+      return name.substring(0,6);
+    }
+  },
   methods: {
     getApplist() {
       applist({ appcount: 0 }).then(response => {
@@ -82,6 +87,9 @@ export default {
     onRefresh() {
       this.$refs.banner.getBannerImg();
       this.getApplist();
+    },
+    imgError(item) {
+      item.app_icon = require('../assets/img/default-icon.png');
     }
   },
   watch: {
@@ -90,6 +98,7 @@ export default {
         message: '加载中...'
       });
       this.getApplist();
+      // this.$refs.footerimg.getFooterImg();
     }
   }
 }
@@ -133,33 +142,31 @@ export default {
         position: relative;
       }
       img.icon {
-        width: 25px;
+        width: 32px;
         position: absolute;
         left: 0;
         top: -10px;
       }
       img.app-img {
-        width: 50px;
-        height: 50px;
+        width: 70px;
+        height: 70px;
         border-radius: 8px;
       }
       span {
         width: 100px;
         margin-top: 10px;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
+        color: #919191;
         text-align: center;
       }
       p {
         color: red;
-        font-size: 12px;
+        font-size: 10px;
         margin-top: 4px;
         width: 100px;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
-        text-align: center;
+        padding-left: 12px;
       }
     }
   }

@@ -3,19 +3,19 @@
     <Header></Header>
 
     <div class="button-wrap">
-      <van-button color="#ec7b1e" @click="show = true">填写新留言</van-button>
+      <van-button icon="comment-o" color="#ec7b1e" @click="show = true">填写新留言</van-button>
     </div>
 
     <p v-if="historymsg.length === 0">您还没有提交过留言</p>
 
     <div class="msg-wrap" v-if="show">
       <div class="input-wrap">
-        <textarea @input="descInput" v-model.trim="content" placeholder="请输入内容" maxlength="120"></textarea>
+        <textarea @input="descInput" v-model.trim="content" placeholder="产品建议，商务合作，请留下您的联系方式。" maxlength="120"></textarea>
         <span class="numberV">{{txtVal}}/120</span>
       </div>
       <div class="public">
-        <van-button plain type="primary" @click="canelMsg">取消</van-button>
-        <van-button plain color="#ec7b1e" class="public-btn" @click="publicMsg">发布</van-button>
+        <van-button plain color="#ec7b1e" @click="publicMsg">发布</van-button>
+        <van-button plain type="primary" class="public-btn" @click="canelMsg">取消</van-button>
       </div>
     </div>
 
@@ -69,7 +69,7 @@ export default {
           Toast.success(res.data.Message);
           // 存入本地
           var storeData = this.historymsg;
-          storeData.push({
+          storeData.unshift({
             time: this.getDateStr(new Date().getTime()),
             content: this.content,
             icon: avatar
@@ -114,8 +114,11 @@ export default {
   padding-bottom: 60px!important;
   background: #eee;
   .button-wrap {
-    padding: 10px 0;
+    padding: 10px 18px;
     text-align: center;
+    .van-icon {
+      padding: 2px;
+    }
     .van-button--default {
       width: 100%;
       border-radius: 8px;
@@ -123,31 +126,36 @@ export default {
   }
   p {
     font-size: 14px;
+    padding: 0 18px;
   }
-  .msg-list {
-    margin-top: 10px;
-    height: 70px;
-    padding: 8px;
-    background: #fff;
-    display: flex;
-    img {
-      width: 60px;
-      margin-right: 10px;
-    }
-    p.time {
-      color: #666;
-      font-size: 12px;
-    }
-    p.text {
-      overflow: hidden;
-      text-overflow: ellipsis;
-      display: -webkit-box;
-      -webkit-line-clamp: 2; //行数
-      -webkit-box-orient: vertical;
+  .history-msg {
+    padding: 0 18px;
+    .msg-list {
+      margin-top: 10px;
+      height: 70px;
+      padding: 8px;
+      background: #fff;
+      display: flex;
+      img {
+        width: 60px;
+        margin-right: 10px;
+      }
+      p.time {
+        color: #666;
+        font-size: 12px;
+      }
+      p.text {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 2; //行数
+        -webkit-box-orient: vertical;
+      }
     }
   }
   .msg-wrap {
     margin-bottom: 10px;
+    padding: 0 18px;
     .input-wrap {
       padding-top: 10px;
       position: relative;

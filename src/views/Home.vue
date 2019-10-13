@@ -6,7 +6,7 @@
       <Banner ref="banner"></Banner>
 
       <div class="notice">
-        <a :href="trumpet && trumpet.open_url" target="_blank">
+        <a :href="trumpet && trumpet.open_url" target="_blank" class="trumpet">
           <van-notice-bar v-if="trumpet && trumpet.des" :text="trumpet && trumpet.des" left-icon="volume" color="red" background="#fff"/>
         </a>
         <div class="hot">
@@ -22,7 +22,7 @@
       <div class="bigimg-list">
         <div class="img-item" v-for="(img, index) in bigImgs" :key="'big_'+index">
           <a :href="img.open_url" target="_blank">
-            <img :src="img.image_url" alt="">
+            <img :src="img.image_url" alt="" @error="imgError(img, 'ad')">
           </a>
         </div>
       </div>
@@ -34,15 +34,15 @@
             <a href="javascript:;" class="hot-tag" @click="goToDetail(app)">
               <img class="icon" v-if="app.tips === '热门'" src="../assets/img/hot-tag.png" alt="">
               <img class="icon" v-else-if="app.tips === '推荐'" src="../assets/img/reco-tag.png" alt="">
-              <img class="app-img" :src="app.app_icon ? app.app_icon : '../assets/img/default.jpg'" alt="">
-              <span class="appname">{{app.app_name}}</span>
+              <img class="app-img" :src="app.app_icon ? app.app_icon : '../assets/img/default-icon.png'" alt="" @error="imgError(app, 'app')">
+              <span class="appname">{{app.app_name | getAppName}}</span>
             </a>
           </van-grid-item>
         </van-grid>
       </div>
 
     </van-pull-refresh>
-    <FooterImg></FooterImg>
+    <FooterImg ref="footerimg"></FooterImg>
   </div>
 </template>
 
@@ -80,6 +80,11 @@ export default {
     this.getTrumpetAndBigimg();
     this.getApplist();
   },
+  filters: {
+    getAppName(name) {
+      return name.substring(0,6);
+    }
+  },
   methods: {
     getTrumpetAndBigimg() {
       adlist().then(response => {
@@ -114,7 +119,15 @@ export default {
       this.$refs.banner.getBannerImg();
       this.getTrumpetAndBigimg();
       this.getApplist();
-    }
+    },
+    imgError(item, type) {
+      if (type === 'ad') {
+        item.image_url = require('../assets/img/ad-img.png');
+      } else {
+        item.app_icon = require('../assets/img/default-icon.png');
+      }
+    },
+    
   },
   watch: {
     '$route'(to, form) {
@@ -123,6 +136,7 @@ export default {
       });
       this.getTrumpetAndBigimg();
       this.getApplist();
+      // this.$refs.footerimg.getFooterImg();
     }
   }
 }
@@ -130,12 +144,27 @@ export default {
 
 <style scoped lang="scss">
 .home {
-  .van-notice-bar {
-    padding: 0 0.15rem;
+  .notice {
+    padding: 0 18px;
+    .van-notice-bar {
+      padding: 0;
+      height: 26px;
+    }
+    .trumpet {
+      display: inline-block;
+      width: 100%;
+      height: 26px;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
   }
   .hot {
     padding-left: 25px;
-    background: url('~@/assets/img/hot.gif') left center no-repeat;
+    margin-bottom: 16px;
+    background-image: url('~@/assets/img/hot.gif');
+    background-repeat: no-repeat;
+    background-size: 22px 15px;
+    background-position: left center;
     span {
       font-size: 14px;
       vertical-align: middle;
@@ -146,7 +175,9 @@ export default {
     }
   }
   .bigimg-list {
+    padding: 0 18px;
     .img-item img{
+      height: 120px;
       margin-bottom: 10px;
       border-radius: 16px;
       box-shadow: 5px 5px 5px #aaa;
@@ -154,7 +185,9 @@ export default {
   }
   .app-down {
     h4 {
-      margin-bottom: 8px;
+      padding-left: 18px;
+      margin: 12px 0;
+      font-weight: bold;
     }
     .van-grid-item {
       a {
@@ -166,22 +199,21 @@ export default {
         position: relative; 
       }
       img.icon {
-        width: 25px;
+        width: 32px;
         position: absolute;
-        left: 0;
+        left: 5px;
         top: -10px;
       }
       img.app-img {
-        width: 50px;
-        height: 50px;
+        width: 70px;
+        height: 70px;
         border-radius: 8px;
       }
       span.appname {
+        font-size: 12px;
         width: 100px;
         margin-top: 10px;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
+        color: #919191;
         text-align: center;
       }
     }

@@ -39,14 +39,18 @@ export default {
 
 <style scoped lang="scss">
 .van-tabbar-item__icon img{
-  width: 20px;
+  width: 27px;
   height: auto;
 }
 .van-tabbar-item {
   font-size: 14px;
   font-weight: bold;
+  color: #333;
 }
 .van-tabbar-item--active {
   color: red;
+}
+.van-tabbar {
+  height: 60px;
 }
 </style>

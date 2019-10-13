@@ -1,18 +1,17 @@
 <template>
   <div id="app">
-    <keep-alive>
-      <router-view/>
-    </keep-alive>
-    <Footer></Footer>
+      <keep-alive>
+        <router-view/>
+      </keep-alive> 
+      <!-- <Index></Index> -->
   </div>
 </template>
 
 <script>
-import Footer from '@/components/Footer.vue'
-
+// import Index from '@/views/Index.vue';
 export default {
   components: {
-    Footer
+    // Index
   }
 }
 </script>
@@ -25,7 +24,7 @@ body {
 #app{
   height: 100%;
   .wrapper {
-    padding: 56px 12px 150px 12px;
+    padding: 56px 0 160px 0;
   }
 }
 </style>
