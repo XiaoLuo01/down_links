@@ -82,7 +82,7 @@ export default {
   },
   filters: {
     getAppName(name) {
-      return name.substring(0,6);
+      return name && name.substring(0,6);
     }
   },
   methods: {

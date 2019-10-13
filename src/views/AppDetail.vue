@@ -111,7 +111,7 @@ export default {
         height: 100%;
         position: relative;
         h4 {
-          font-size: 16px;
+          font-size: 18px;
           font-weight: bold;
           position: absolute;
           top: 0;
