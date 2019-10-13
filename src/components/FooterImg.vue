@@ -1,7 +1,7 @@
 <template>
   <div class="footer-img">
     <a :href="img.open_url" target="_blank">
-      <img :src="img.image_url" alt="" @error="imgError(img)">
+      <img class="type-1" v-lazy="img.image_url" alt="">
     </a>
   </div>
 </template>
@@ -30,9 +30,6 @@ export default {
       }).catch(err=>{
         console.log(err)
       });
-    },
-    imgError(item) {
-      item.image_url = require('../assets/img/footer-img.png');
     }
   }
 }
@@ -46,7 +43,7 @@ export default {
   width: 100%;
   z-index: 1;
   img {
-    height: 100px;
+    height: 60px;
   }
 }
 </style>

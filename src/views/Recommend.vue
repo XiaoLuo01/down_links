@@ -11,7 +11,7 @@
             <a href="javascript:;" class="hot-tag" @click="goToDetail(app)">
               <img class="icon" v-if="app.tips === '热门'" src="../assets/img/hot-tag.png" alt="">
               <img class="icon" v-else-if="app.tips === '推荐'" src="../assets/img/reco-tag.png" alt="">
-              <img class="app-img" :src="app.app_icon" alt="" @error="imgError(app)">
+              <img class="app-img type-0" v-lazy="app.app_icon" alt="">
               <span>{{app.app_name | getAppName}}</span>
               <p>下载数: {{app.app_download_count}}</p>
             </a>
@@ -87,9 +87,6 @@ export default {
     onRefresh() {
       this.$refs.banner.getBannerImg();
       this.getApplist();
-    },
-    imgError(item) {
-      item.app_icon = require('../assets/img/default-icon.png');
     }
   },
   watch: {

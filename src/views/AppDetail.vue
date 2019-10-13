@@ -56,6 +56,7 @@ export default {
   },
   methods: {
     goBack() {
+      console.log(1)
       this.$router.back(-1);
     },
     reportClick() {
@@ -89,7 +90,7 @@ export default {
 <style scoped lang="scss">
 .app-detail {
   height: 100%;
-  padding-bottom: 100px!important;
+  padding-bottom: 60px!important;
   .van-nav-bar__title {
     font-weight: 700;
   }

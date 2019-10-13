@@ -3,7 +3,7 @@
     <van-swipe :autoplay="3000" indicator-color="#1ABC9C">
       <van-swipe-item v-for="(image, index) in images" :key="'img_'+index">
         <a :href="image.open_url" target="_blank">
-          <img :src="image.image_url" :title="image.des" @error="imgError(image)"/>
+          <img v-lazy="image.image_url" :title="image.des" @error="imgError(image)"/>
         </a>
       </van-swipe-item>
     </van-swipe>
@@ -53,7 +53,7 @@ export default {
 .van-swipe {
   border-radius: 16px;
   box-shadow: 5px 5px 5px #aaa;
-  margin: 18px 0;
+  margin: 18px 0 12px;
   a {
     display: inline-block;
   }

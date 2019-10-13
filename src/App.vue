@@ -24,7 +24,7 @@ body {
 #app{
   height: 100%;
   .wrapper {
-    padding: 56px 0 160px 0;
+    padding: 56px 0 120px 0;
   }
 }
 </style>

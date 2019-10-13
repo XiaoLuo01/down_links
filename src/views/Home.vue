@@ -22,7 +22,7 @@
       <div class="bigimg-list">
         <div class="img-item" v-for="(img, index) in bigImgs" :key="'big_'+index">
           <a :href="img.open_url" target="_blank">
-            <img :src="img.image_url" alt="" @error="imgError(img, 'ad')">
+            <img v-lazy="img.image_url" alt="" @error="imgError(img, 'ad')">
           </a>
         </div>
       </div>
@@ -34,7 +34,7 @@
             <a href="javascript:;" class="hot-tag" @click="goToDetail(app)">
               <img class="icon" v-if="app.tips === '热门'" src="../assets/img/hot-tag.png" alt="">
               <img class="icon" v-else-if="app.tips === '推荐'" src="../assets/img/reco-tag.png" alt="">
-              <img class="app-img" :src="app.app_icon ? app.app_icon : '../assets/img/default-icon.png'" alt="" @error="imgError(app, 'app')">
+              <img class="app-img type-0" v-lazy="app.app_icon" alt="">
               <span class="appname">{{app.app_name | getAppName}}</span>
             </a>
           </van-grid-item>
@@ -148,19 +148,19 @@ export default {
     padding: 0 18px;
     .van-notice-bar {
       padding: 0;
-      height: 26px;
+      height: 20px;
     }
     .trumpet {
       display: inline-block;
       width: 100%;
-      height: 26px;
+      height: 20px;
       font-weight: bold;
       margin-bottom: 5px;
     }
   }
   .hot {
     padding-left: 25px;
-    margin-bottom: 16px;
+    margin-bottom: 8px;
     background-image: url('~@/assets/img/hot.gif');
     background-repeat: no-repeat;
     background-size: 22px 15px;

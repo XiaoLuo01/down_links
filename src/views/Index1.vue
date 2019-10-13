@@ -8,7 +8,7 @@
 <script>
 import Footer from '@/components/Footer.vue';
 export default {
-  name: 'Index',
+  name: 'Index1',
   data() {
     return {
 
