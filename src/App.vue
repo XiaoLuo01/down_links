@@ -24,7 +24,9 @@ body {
 #app{
   height: 100%;
   .wrapper {
-    padding: 56px 0 120px 0;
+    padding: 55px 0 110px 0;
+    // background-image: url('~@/assets/img/bg.png');
+    // background-size: 100% 100%;
   }
 }
 </style>

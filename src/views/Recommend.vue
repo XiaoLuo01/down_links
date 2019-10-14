@@ -163,7 +163,7 @@ export default {
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
-        padding-left: 12px;
+        padding-left: 25px;
       }
     }
   }

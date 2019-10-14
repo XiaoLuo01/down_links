@@ -7,16 +7,30 @@
 
       <div class="notice">
         <a :href="trumpet && trumpet.open_url" target="_blank" class="trumpet">
-          <van-notice-bar v-if="trumpet && trumpet.des" :text="trumpet && trumpet.des" left-icon="volume" color="red" background="#fff"/>
+          <van-notice-bar v-if="trumpet && trumpet.des" :text="trumpet && trumpet.des" left-icon="volume" color="red" background="transparent"/>
         </a>
         <div class="hot">
           <span>全网最方便的下载专区</span>
           <span class="hot-text" v-if="trumpet && trumpet.des">
             <a :href="trumpet && trumpet.open_url" target="_blank">
-              <van-notice-bar :text="trumpet && trumpet.des" color="red" background="#fff"/>
+              <van-notice-bar :text="trumpet && trumpet.des" color="red" background="transparent"/>
             </a>
           </span>
         </div>
+      </div>
+
+      <div class="app-down superrecom" v-if="recommendApp.length !== 0">
+        <h4>超级推荐</h4>
+        <van-grid :column-num="3" square>
+          <van-grid-item v-for="(app, index) in recommendApp" :key="'app_'+index" >
+            <a href="javascript:;" class="hot-tag" @click="goToDetail(app)">
+              <img class="icon" v-if="app.tips === '热门'" src="../assets/img/hot-tag.png" alt="">
+              <img class="icon" v-else-if="app.tips === '推荐'" src="../assets/img/reco-tag.png" alt="">
+              <img class="app-img type-0" v-lazy="app.app_icon" alt="">
+              <span class="appname">{{app.app_name | getAppName}}</span>
+            </a>
+          </van-grid-item>
+        </van-grid>
       </div>
       
       <div class="bigimg-list">
@@ -27,8 +41,8 @@
         </div>
       </div>
 
-      <div class="app-down">
-        <h4>推荐下载</h4>
+      <div class="app-down" v-if="applists.length !== 0">
+        <h4>热门下载</h4>
         <van-grid :column-num="3" square >
           <van-grid-item v-for="(app, index) in applists" :key="'app_'+index" >
             <a href="javascript:;" class="hot-tag" @click="goToDetail(app)">
@@ -60,6 +74,7 @@ export default {
     return {
       trumpet: '',
       bigImgs: [],
+      recommendApp: [],
       applists: [],
       isLoading: false
     }
@@ -103,7 +118,9 @@ export default {
     getApplist() {
       applist({ appcount: 0 }).then(response => {
         if (response.data.Data) {
-          this.applists = response.data.Data;
+          var lists = response.data.Data
+          this.recommendApp = lists.slice(0, 6);
+          this.applists = lists.slice(6);
         }
       }).catch(err=>{
         console.log(err)
@@ -142,7 +159,7 @@ export default {
 }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 .home {
   .notice {
     padding: 0 18px;
@@ -171,7 +188,7 @@ export default {
     }
     .hot-text {
       display: inline-block;
-      width: 50%;
+      width: 55%;
     }
   }
   .bigimg-list {
@@ -184,9 +201,12 @@ export default {
     }
   }
   .app-down {
+    &.superrecom {
+      margin-bottom: 8px;
+    }
     h4 {
       padding-left: 18px;
-      margin: 12px 0;
+      margin: 12px 0 6px;
       font-weight: bold;
     }
     .van-grid-item {
@@ -207,7 +227,7 @@ export default {
       img.app-img {
         width: 70px;
         height: 70px;
-        border-radius: 8px;
+        border-radius: 16px;
       }
       span.appname {
         font-size: 12px;
@@ -217,6 +237,9 @@ export default {
         text-align: center;
       }
     }
+  }
+  .van-grid-item__content--center {
+    background: transparent;
   }
 }
 </style>

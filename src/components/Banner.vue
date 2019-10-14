@@ -53,7 +53,7 @@ export default {
 .van-swipe {
   border-radius: 16px;
   box-shadow: 5px 5px 5px #aaa;
-  margin: 18px 0 12px;
+  margin: 0 0 12px;
   a {
     display: inline-block;
   }

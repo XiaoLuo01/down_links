@@ -37,20 +37,24 @@ export default {
 }
 </script>
 
-<style scoped lang="scss">
-.van-tabbar-item__icon img{
-  width: 27px;
-  height: auto;
-}
+<style lang="scss">
 .van-tabbar-item {
   font-size: 14px;
   font-weight: bold;
   color: #333;
+  // position: relative;
+  .van-tabbar-item__icon {
+    margin-bottom: 2px;
+    img {
+      width: 27px;
+      height: auto;
+    }
+  }
 }
 .van-tabbar-item--active {
   color: red;
 }
 .van-tabbar {
-  height: 60px;
+  height: 50px;
 }
 </style>

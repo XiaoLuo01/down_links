@@ -39,7 +39,7 @@ export default {
 .footer-img {
   position: fixed;
   left: 0;
-  bottom: 60px;
+  bottom: 50px;
   width: 100%;
   z-index: 1;
   img {

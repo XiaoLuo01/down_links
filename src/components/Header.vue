@@ -1,6 +1,6 @@
 <template>
   <div class="header">
-    <van-nav-bar title="下载通" fixed border></van-nav-bar>
+    <van-nav-bar title="泡泡鱼" fixed border></van-nav-bar>
   </div>
 </template>
 

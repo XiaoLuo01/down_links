@@ -56,7 +56,6 @@ export default {
   },
   methods: {
     goBack() {
-      console.log(1)
       this.$router.back(-1);
     },
     reportClick() {
